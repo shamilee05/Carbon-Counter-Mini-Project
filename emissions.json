@@ -1,0 +1,103 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "India",
+        "color": "red"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.5937,
+          78.9629
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Germany",
+        "color": "orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          51.1657,
+          10.4515
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Iran",
+        "color": "orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          32.4279,
+          53.6880
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Saudi Arabia",
+        "color": "orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          23.8859,
+          45.0792
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Brazil",
+        "color": "yellow"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          14.2350,
+          51.9253
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "South Africa",
+        "color": "orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          30.5595,
+          22.9375
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Turkey",
+        "color": "red"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          38.9637,
+          35.2433
+        ]
+      }
+    }
+  ]
+}
