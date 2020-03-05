@@ -4,9 +4,10 @@ const express = require('express'); // Require Express
 const app = express(); // Create the app, basically the website
 var bodyParser = require("body-parser");
 
-app.listen(3000, () => {
-    console.log("Listening at the port 3000")
-}); // 3000 cause it most probably won't be used by any other server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log("Listening at the port ${ PORT }");
+});
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false })); // For POST requests
