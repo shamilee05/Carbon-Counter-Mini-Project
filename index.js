@@ -2,12 +2,15 @@
 
 const express = require('express'); // Require Express
 const app = express(); // Create the app, basically the website
+var bodyParser = require("body-parser");
 
 app.listen(3000, () => {
     console.log("Listening at the port 3000")
 }); // 3000 cause it most probably won't be used by any other server
 
 app.use(express.static('actual_website'));
+app.use(bodyParser.urlencoded({ extended: false })); // For POST requests
+app.use(bodyParser.json()); //For POST requests
 
 // Temporary database for now
 const database = {
@@ -33,4 +36,46 @@ app.get('/activities/:activityID', (req,res) => {
     else {
         res.send("No such activity is available on our website as yet."); // The activity couldn't be looked up
     }
+});
+
+// For MongoDB
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const userSchema = new Schema({
+    username: String,
+    password: String
+});
+
+mongoose.model('user', userSchema, 'users');
+
+const url = "mongodb://localhost:27017/users";
+
+// Legacy code - Not needed with Mongoose5
+// mongoose.Promise = global.Promise;
+
+mongoose.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true },function(err,db){
+    if(err) {
+        console.log("Error " + err);
+    }
+    else {
+        console.log("Connected on url " + url);
+} });
+
+// Creating a new user
+app.post('/student', function(req,res) { 
+    console.log("Creating a new user");
+    var newUser = new User(); 
+    newUser.username = req.body.username; 
+    newUser.password = req.body.password; 
+    
+    console.log(req.body.username);
+
+    newUser.save(function(err, insertedDoc){
+        if(err){
+            console.log("Error "+err);
+        } else{
+            res.json(insertedDoc);
+        }
+    })
 });
