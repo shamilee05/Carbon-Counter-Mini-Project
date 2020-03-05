@@ -1,0 +1,7 @@
+body {
+    background-image: url("footprint.jpg");
+    background-size: 2000px 900px;
+  }
+  p, h1, h3, h5 {
+      text-align: center;  
+  }
