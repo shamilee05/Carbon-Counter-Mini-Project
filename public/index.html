@@ -20,68 +20,6 @@
 
 <link rel="stylesheet" href="carbon_style.css">
 
-<script type="text/javascript">
-    var ajaxRequest;  // The variable that makes Ajax possible!
-    function ajaxFunction() {
-        try {
-            // Opera 8.0+, Firefox, Safari
-            ajaxRequest = new XMLHttpRequest();
-        } catch (e) {
-    
-            // Internet Explorer Browsers
-            try {
-                ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
-            } catch (e) {
-            
-                try {
-                    ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
-                } catch (e) {
-            
-                    // Something went wrong
-                    alert("Your browser broke!");
-                    return false;
-                }
-            }
-        }
-   }
-
-   function sendUserCredentials() {
-       ajaxFunction();
-
-       ajaxRequest.onreadystatechange = function() { // This is the callback function
-            if (this.readyState == 4 && this.status == 200) {
-                // send user credentials
-            }
-       }
-       ajaxRequest.open("GET","", true);
-       ajaxRequest.send();
-   }
-
-   function showRegistrationForm() {
-       ajaxFunction();
-
-       ajaxRequest.onreadystatechange = function() { // This is the callback function
-            if (this.readyState == 4 && this.status == 200) {
-                // show Registration form
-            }
-       }
-       ajaxRequest.open("GET","", true);
-       ajaxRequest.send();
-   }
-
-   function showLogin() {
-       ajaxFunction();
-
-       ajaxRequest.onreadystatechange = function() { // This is the callback function
-            if (this.readyState == 4 && this.status == 200) {
-                // show Login form
-            }
-       }
-       ajaxRequest.open("GET","", true);
-       ajaxRequest.send();
-   }
-</script>
-
 </head>
 <body>
     <div class="container pt-3 my-3 border">
@@ -92,13 +30,13 @@
         <h3>Start by logging in here</h3>
         <br><br>
         <h5> I am new to this website! </h5>
-        <button type="button" class="btn btn-primary btn-md" id="newUser" onclick="showRegistrationForm()"> Help me Register!</button>
-        <div id="new_user"> </div>
+        <button type="button" class="btn btn-primary btn-md" id="newUser" onClick="location.href='register.html'"> Help me register!</button>
 
         <br><br>
+        <br><br>
+
         <h5> Hey, I am here again! </h5>
-        <button type="button" class="btn btn-primary btn-md" id="existingUser" onclick="showLogin()"> I want to log in!</button>
-        <div id="existing_user"> </div>
+        <button type="button" class="btn btn-primary btn-md" id="existingUser" onClick="location.href='login.html'"> I want to log in!</button>
         <br><br>
     </div>
 </body>
