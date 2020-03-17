@@ -4,10 +4,9 @@ const express = require('express'); // Require Express
 const app = express(); // Create the app, basically the website
 var bodyParser = require("body-parser");
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log("Listening at the port ${ PORT }");
-});
+app.listen(3000, () => {
+    console.log("Listening at the port 3000")
+}); // 3000 cause it most probably won't be used by any other server
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false })); // For POST requests
@@ -43,12 +42,15 @@ app.get('/activities/:activityID', (req,res) => {
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
+const UserSchema = new Schema({
+    firstname: String,
+    lastname: String,
     username: String,
     password: String
 });
 
-mongoose.model('user', userSchema, 'users');
+// users is the name of the database
+var UserModel = mongoose.model('UserModel', UserSchema, 'users');
 
 const url = "mongodb://localhost:27017/users";
 
@@ -64,19 +66,32 @@ mongoose.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true },functio
 } });
 
 // Creating a new user
-app.post('/student', function(req,res) { 
+app.post('/register_new_user', function(req,res) { 
     console.log("Creating a new user");
-    var newUser = new User(); 
-    newUser.username = req.body.username; 
-    newUser.password = req.body.password; 
+    var newUser = new UserModel();
+    newUser.firstname = req.body.fname; 
+    newUser.lastname = req.body.lname; 
+    newUser.username = req.body.uname; 
+    newUser.password = req.body.pwd; 
     
-    console.log(req.body.username);
+    // console.log(req.body.uname);
 
     newUser.save(function(err, insertedDoc){
-        if(err){
+        if(err) {
             console.log("Error "+err);
-        } else{
-            res.json(insertedDoc);
+        } else {
+            res.redirect("login.html");
         }
     })
+});
+
+// Verifying user before logging in 
+app.post('/login_user', function(req,res) { 
+    console.log("Thodi si dhool meri");
+    var found_user = UserModel.findOne({username: req.body.uname});
+
+    if(found_user) {
+        console.log(found_user.name);
+        res.end();
+    }
 });
