@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"> 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+<title> Carbon Counter</title>
+
+<link rel="stylesheet" href="carbon_style.css">
+
+</head>
+<body>
+    <div class="container pt-3 my-3 border">
+        <h1>Welcome to Carbon Counter</h1>
+    </div>
+    <br><br>
+    <div class="container pt-3 my-3 border" style="text-align:center;" id="login">
+        <h3>Let's get you registered here!</h3>
+        <br><br>
+        
+        <form action="register_new_user" method="post">
+            <label for="fname">First name:</label><br>
+            <input type="text" id="fname" name="fname"><br><br>
+            <label for="lname">Last name:</label><br>
+            <input type="text" id="lname" name="lname"><br><br>
+
+            <label for="uname">Username:</label><br>
+            <input type="text" id="username" name="uname"><br><br>
+            <label for="pwd">Password:</label><br>
+            <input type="text" id="password" name="pwd"><br><br>
+            <input type="submit" value="Submit"><br><br><br>
+        </form>
+    </div>
+</body>
+</html>
