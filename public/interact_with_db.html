@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"> 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+<title> Carbon Counter</title>
+
+<link rel="stylesheet" href="carbon_style.css">
+
+<script type="text/javascript">
+    
+    var ajaxRequest;  // The variable that makes Ajax possible!
+    function ajaxFunction() {
+        try {
+            // Opera 8.0+, Firefox, Safari
+            ajaxRequest = new XMLHttpRequest();
+        } catch (e) {
+    
+            // Internet Explorer Browsers
+            try {
+                ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+            } catch (e) {
+            
+                try {
+                    ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                } catch (e) {
+            
+                    // Something went wrong
+                    alert("Your browser broke!");
+                    return false;
+                }
+            }
+        }
+    }
+
+    function showUsers() {
+        ajaxFunction();
+        ajaxRequest.onreadystatechange = function() { // This is the callback function
+            if (this.readyState == 4 && this.status == 200) {
+                // console.log(this.responseText, "AJAX was successful");
+
+                var usersArray = JSON.parse(this.responseText);
+                //console.log(this.responseText);
+
+                document.getElementById("show_content").innerHTML = "These are all the users we currently have:";
+
+                var ul = document.createElement("ul");
+                ul.setAttribute('id','allUsers');
+                ul.setAttribute('class','list-group');
+                (document.getElementById("show_content")).appendChild(ul);
+                
+                for (var i = 0; i < usersArray.length; i++) {
+                    var indiUser = usersArray[i];
+                    var li = document.createElement("li");
+                    li.setAttribute('id','user'+(i+1)); // The individual user are provided with ids for the front end
+                    li.setAttribute('name',indiUser); // The individual activities are provided with names
+                    li.setAttribute('class','list-group-item'); // The individual activities are provided with a class for bootstrapping
+                    li.appendChild(document.createTextNode(indiUser.firstname+" "+indiUser.lastname));
+                    ul.appendChild(li);
+                }            
+            }
+        }
+
+        ajaxRequest.open("GET","display_all_users", true);
+
+        ajaxRequest.send();
+        // console.log("If this gets printed, then we know that the request has been sent!")
+    }
+
+    function showOneUser() {
+        document.getElementById("show_content").innerHTML = "Enter the username to view user's data:";
+        var br = document.createElement("br");
+        (document.getElementById("show_content")).appendChild(br);
+        var br = document.createElement("br");
+        (document.getElementById("show_content")).appendChild(br);
+        var input = document.createElement("input");
+        input.setAttribute('id','enterUsername');
+        input.setAttribute('type','text');
+        (document.getElementById("show_content")).appendChild(input);
+        var br = document.createElement("br");
+        (document.getElementById("show_content")).appendChild(br);
+
+        var button = document.createElement("button");
+        button.setAttribute('type','button');
+        button.setAttribute('id','showUserData');
+        button.setAttribute('class','btn btn-primary btn-md');
+        (document.getElementById("show_content")).appendChild(button);
+
+        button.onclick = function() {
+            ajaxRequest.onreadystatechange = function() { // This is the callback function
+                if (this.readyState == 4 && this.status == 200) {
+                    // console.log(this.responseText, "AJAX was successful");
+
+                    var userArray = JSON.parse(this.responseText);
+                    console.log(this.responseText);
+
+                    var br = document.createElement("br");
+                    (document.getElementById("show_content")).appendChild(br);
+                    
+                    (document.getElementById("show_content")).appendChild(document.createTextNode("First Name: "+userArray.firstname));
+
+                    var br = document.createElement("br");
+                    (document.getElementById("show_content")).appendChild(br);
+
+                    (document.getElementById("show_content")).appendChild(document.createTextNode("Last Name: "+userArray.lastname));
+
+                    var br = document.createElement("br");
+                    (document.getElementById("show_content")).appendChild(br);
+
+                    (document.getElementById("show_content")).appendChild(document.createTextNode("Password: "+userArray.password));
+                }
+            }
+            var param = document.getElementById("enterUsername").value;
+            ajaxRequest.open("GET","display_user/"+param, true);
+
+            ajaxRequest.send();
+            // console.log("If this gets printed, then we know that the request has been sent!")
+        };
+    }
+
+    //This updates the password of the user
+    function updateInfo() {
+        document.getElementById("show_content").innerHTML = "Enter the username:";
+        var br = document.createElement("br");
+        (document.getElementById("show_content")).appendChild(br);
+        var input = document.createElement("input");
+        input.setAttribute('id','enterUsername');
+        input.setAttribute('type','text');
+        (document.getElementById("show_content")).appendChild(input);
+
+        var br = document.createElement("br");
+        (document.getElementById("show_content")).appendChild(br);
+        var br = document.createElement("br");
+        var br = document.createElement("br");
+        (document.getElementById("show_content")).appendChild(br);
+        (document.getElementById("show_content")).appendChild(br);
+        var br = document.createElement("br");
+
+        (document.getElementById("show_content")).appendChild(document.createTextNode("Enter the new password:"));
+        var br = document.createElement("br");
+        (document.getElementById("show_content")).appendChild(br);
+        var input_2 = document.createElement("input");
+        input_2.setAttribute('id','enterPassword');
+        input_2.setAttribute('type','password');
+        (document.getElementById("show_content")).appendChild(input_2);
+
+        var br = document.createElement("br");
+        (document.getElementById("show_content")).appendChild(br);
+        var br = document.createElement("br");
+        (document.getElementById("show_content")).appendChild(br);
+        var br = document.createElement("br");
+        (document.getElementById("show_content")).appendChild(br);
+
+        var button = document.createElement("button");
+        button.setAttribute('type','button');
+        button.setAttribute('id','updateUserData');
+        button.setAttribute('class','btn btn-primary btn-md');
+        (document.getElementById("show_content")).appendChild(button);
+
+        button.onclick = function() {
+            ajaxRequest.onreadystatechange = function() { // This is the callback function
+                if (this.readyState == 4 && this.status == 200) {
+                    // console.log(this.responseText, "AJAX was successful");
+                    var br = document.createElement("br");
+                    (document.getElementById("show_content")).appendChild(br);
+                    
+                    (document.getElementById("show_content")).appendChild(document.createTextNode(this.responseText));
+                }
+            }
+            const data = JSON.stringify({
+                newpwd: input_2.value
+            })
+
+            var param = document.getElementById("enterUsername").value;
+            ajaxRequest.open("PUT","update_user/"+param, true);
+            ajaxRequest.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+            ajaxRequest.send(data);
+            //console.log(data);
+            // console.log("If this gets printed, then we know that the request has been sent!")
+        };
+    }
+
+    function deleteUser() {
+        document.getElementById("show_content").innerHTML = "Enter the username of user to be deleted:";
+        var br = document.createElement("br");
+        (document.getElementById("show_content")).appendChild(br);
+        var br = document.createElement("br");
+        (document.getElementById("show_content")).appendChild(br);
+        var input = document.createElement("input");
+        input.setAttribute('id','enterUsername');
+        input.setAttribute('type','text');
+        (document.getElementById("show_content")).appendChild(input);
+        var br = document.createElement("br");
+        (document.getElementById("show_content")).appendChild(br);
+
+        var button = document.createElement("button");
+        button.setAttribute('type','button');
+        button.setAttribute('id','deleteuser');
+        button.setAttribute('class','btn btn-primary btn-md');
+        (document.getElementById("show_content")).appendChild(button);
+
+        button.onclick = function() {
+            ajaxRequest.onreadystatechange = function() { // This is the callback function
+                if (this.readyState == 4 && this.status == 200) {
+                    // console.log(this.responseText, "AJAX was successful");
+
+                    var br = document.createElement("br");
+                    (document.getElementById("show_content")).appendChild(br);
+                    
+                    (document.getElementById("show_content")).appendChild(document.createTextNode(this.responseText));
+                }
+            }
+            var param = document.getElementById("enterUsername").value;
+            ajaxRequest.open("GET","delete_user/"+param, true);
+
+            ajaxRequest.send();
+            // console.log("If this gets printed, then we know that the request has been sent!")
+        };
+    }
+</script>
+    
+</head>
+
+<body>
+    <div class="container pt-3 my-3 border">
+        <h1>Welcome to Carbon Counter</h1>
+    </div>
+
+    <div class="container pt-3 my-3 border" style="text-align:center;" id="db_info">
+        <h4>This page is exclusively for the admin to interact with the database</h4>
+        <br>
+        <div class="btn-group" style="width:100%">
+            <button style="width:25%" onclick="showUsers()">Show all users</button>
+            <button style="width:25%" onclick="showOneUser()">Show data for a particular user</button>
+            <button style="width:25%" onclick="updateInfo()">Update password for a user</button>
+            <button style="width:25%" onclick="deleteUser()">Delete a user</button>
+        </div>
+        <br><br>
+        <div id="show_content" class="container pt-3 my-3 border"></div><br><br>
+    </div>
+
+</body>
+</html>
