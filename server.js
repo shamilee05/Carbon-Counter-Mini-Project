@@ -5,8 +5,8 @@ const app = express(); // Create the app, basically the website
 var bodyParser = require("body-parser");
 var cookieParser = require('cookie-parser');
 
-app.listen(3000, () => {
-    console.log("Listening at the port 3000")
+app.listen(process.env.PORT || 3000, () => {
+    console.log("Listening at the port")
 }); // 3000 cause it most probably won't be used by any other server
 
 app.use(express.static('public'));
