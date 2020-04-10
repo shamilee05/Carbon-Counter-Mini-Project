@@ -23,7 +23,7 @@ body {
   
   .btn-group button:not(:last-child) {
     border-right: none; /* Prevent double borders */
-  } 
+  }
   
   /* Add a background color on hover */
   .btn-group button:hover {
