@@ -61,7 +61,7 @@ app.get('/activities/:activityID', (req,res) => {
 
 // For MongoDB
 const mongoose = require('mongoose');
-const url = "mongodb://localhost:27017/users";
+const url = "mongodb://localhost:27017/users" || process.env.MONGODB_URI;
 
 // Legacy code - Not needed with Mongoose5
 // mongoose.Promise = global.Promise;
