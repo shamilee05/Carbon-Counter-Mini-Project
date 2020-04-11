@@ -61,7 +61,7 @@ app.get('/activities/:activityID', (req,res) => {
 
 // For MongoDB
 const mongoose = require('mongoose');
-const url = "mongodb://localhost:27017/users" || "mongodb+srv://cluster0-2pnd0.mongodb.net/test?retryWrites=true&w=majority";
+const url = /* "mongodb://localhost:27017/users" || */ "mongodb+srv://cluster0-2pnd0.mongodb.net/test?retryWrites=true&w=majority";
 
 // Legacy code - Not needed with Mongoose5
 // mongoose.Promise = global.Promise;
