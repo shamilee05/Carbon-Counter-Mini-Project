@@ -61,18 +61,28 @@ app.get('/activities/:activityID', (req,res) => {
 
 // For MongoDB
 const mongoose = require('mongoose');
-const url = "mongodb://localhost:27017/users" || process.env.MONGODB_URI;
+const url = "mongodb://localhost:27017/users" || "mongodb+srv://cluster0-2pnd0.mongodb.net/test?retryWrites=true&w=majority";
 
 // Legacy code - Not needed with Mongoose5
 // mongoose.Promise = global.Promise;
 
-mongoose.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false },function(err,db) {  //Connect to the 'users' database using local MongoDB
-    if(err) {
-        console.log("Error " + err);
-    }
-    else {
-        console.log("Connected on url " + url);
-} });
+mongoose.connect(url,
+    { 
+	useNewUrlParser: true, 
+	useUnifiedTopology: true, 
+	useFindAndModify: false,
+	dbName: 'users',
+    	user: 'sham_ait',
+    	pass: 'x3cbFO0coQE5FINr'
+    },
+	function(err,db) {  //Connect to the 'users' database using MongoDB
+	if(err) {
+		console.log("Error " + err);
+	}
+	else {
+		console.log("Connected on url " + url);
+	} 
+});
 
 const Schema = mongoose.Schema;
 const UserSchema = new Schema({
