@@ -1,5 +1,5 @@
 # Carbon-Counter-Mini-Project
-The website measures carbon emissions by recording daily routine activities. Made using NodeJS.
+The website measures carbon emissions by recording daily routine activities. Made using NodeJS and MongoDB.
 
 With an ever-increasing population and the consequent strain put on various resources, it becomes important to be aware of what and how much we consume as individuals and furthermore, how we can reduce our consumption so as to contribute to a healthier environment.
 
