@@ -7,3 +7,4 @@ In present times, when not everyone is equally interested in contributing their 
 
 For now, there are Registration and Login modules implemented.
 Putting up input of activities and calculation of levels soon.
+Sessions will be added to the login as well.
