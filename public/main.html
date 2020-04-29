@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"> 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+<title> Carbon Counter</title>
+
+<link rel="stylesheet" href="carbon_style.css">
+
+</head>
+<body>
+    <script>
+        jQuery($ => {
+          // The speed of the scroll in milliseconds
+          const speed = 3000;
+      
+          $('a[href*="#"]')
+            .filter((i, a) => a.getAttribute('href').startsWith('#') || a.href.startsWith(`${location.href}#`))
+            .unbind('click.smoothScroll')
+            .bind('click.smoothScroll', event => {
+              const targetId = event.currentTarget.getAttribute('href').split('#')[1];
+              const targetElement = document.getElementById(targetId);
+      
+              if (targetElement) {
+                event.preventDefault();
+                $('html, body').animate({ scrollTop: $(targetElement).offset().top }, speed);
+              }
+            });
+        });
+    </script>
+
+    <div class="container pt-3 my-3 border">
+        <h1>Welcome to Carbon Counter</h1>
+    </div>
+
+    <div class="container pt-3 my-3 border" style="text-align:center;">
+        <div class="btn-group" style="width:100%;">
+            <button style="width:33%" onclick="window.location.href='#main_panel_1'"> About Carbon Counter </button>
+            <button style="width:33%" onclick="window.location.href='#main_panel_2'"> Activities</button>
+            <button style="width:33%" onclick="window.location.href='#main_panel_3'"> Login/Register with us </button>
+        </div>
+        <br><br>
+    </div>
+
+    <!-- First Grid -->
+    <div class="container pt-3 my-3 border" id="main_panel_1">
+        <h3> About Carbon Counter </h3>
+        <p>
+            With an ever-increasing population and the consequent strain put on various resources, 
+            it becomes important to be aware of what and how much we consume as individuals and furthermore, 
+            how we can reduce our consumption so as to contribute to a healthier environment.
+        </p>
+        <br>
+        <p>
+            In present times, when not everyone is equally interested in contributing their part to the environment, 
+            Carbon Counter makes sure that the user keeps their consumption levels in check by carefully calculating 
+            the amount of CO2 levels emitted due to the various daily activities that they perform - 
+            commuting via their car to reach their workplace, using the kettle to get their morning coffee, 
+            using the hairdryer, etc. Increasing levels of CO2 is, definitely, 
+            a growing problem and this is one way wherein people could acknowledge their consumption rates and 
+            take efforts to minimize them, hence doing their bit for the environment.
+        </p>
+    </div>
+    <br><br>
+    <br><br>
+
+    <!-- Second Grid -->
+    <div class="container pt-3 my-3 border" id="main_panel_2">
+        <h3> Activities </h3>
+        <p>
+            After logging in with us, you can start recording all your activities for the day. 
+            This can start from as early as your morning bath wherein you could tell us the amount of time you used 
+            the geyser for or you could us about your commute to work and hence how much fuel your car/motorcycle consumed on the way.
+        </p>
+        <br>
+        <p>
+            As of now, we have three sections, Vehicular Travelling, Domestic Activities and Work Activities. On choosing 
+            each of these you get the following options under every activity: under Vehicular Travelling we have 'using the car' or 
+            'using a motorcycle', under Domestic Activities we have 'using the geyser' or 'using the kettle' and finally under 
+            Work Activities we have 'using the laptop' or 'using the printer'. Hence on choosing an option out of these, 
+            you would be asked the duration that you performed the activity for and our algorithms will work out the 
+            amount of carbon that was emitted in this process. We will also make up a dashboard for you which you can keep checking 
+            to see your progress and if your emissions have decreased.
+        </p>
+    </div>
+    <br><br>
+    <br><br>
+
+    <!-- Third Grid -->
+    <div class="container pt-3 my-3 border" id="main_panel_3">
+        <h3> Login/Register with us </h3>
+        <p>
+            So let's jump into making your profile with us!
+            <br><br>
+            Click the link below to proceed to the Registration/Login page
+            <br><br>
+            <button type="button" class="btn btn-primary btn-md" id="proceed_from_main" onclick="window.location.href='index.html'"> Let's login/register </button>
+        </p>
+    </div>
+    <br><br>
+    <br><br>
+
+</body>
+</html>
