@@ -3,16 +3,14 @@
 const express = require('express'); // Require Express
 const app = express(); // Create the app, basically the website
 var bodyParser = require("body-parser");
-var cookieParser = require('cookie-parser');
 
-app.listen(process.env.PORT || 3000, () => {
+app.listen( process.env.PORT || 3000, () => {
     console.log("Listening at the port")
 }); // 3000 cause it most probably won't be used by any other server
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false })); // For POST requests
 app.use(bodyParser.json()); //For POST requests
-app.use(cookieParser());
 
 // Temporary database for now
 const database = {
@@ -58,22 +56,21 @@ app.get('/activities/:activityID', (req,res) => {
 //     res.send('Hello there!');
 // });
 
-
 // For MongoDB
 const mongoose = require('mongoose');
-const url = /* "mongodb://localhost:27017/users" || */ "mongodb+srv://cluster0-2pnd0.mongodb.net/test?retryWrites=true&w=majority";
+const url = /*"mongodb://localhost:27017/users" ||*/ "mongodb+srv://cluster0-2pnd0.mongodb.net/test?retryWrites=true&w=majority";
 
 // Legacy code - Not needed with Mongoose5
 // mongoose.Promise = global.Promise;
 
 mongoose.connect(url,
     { 
-	useNewUrlParser: true, 
-	useUnifiedTopology: true, 
-	useFindAndModify: false,
-	dbName: 'users',
-    	user: 'sham_ait',
-    	pass: 'x3cbFO0coQE5FINr'
+        useNewUrlParser: true, 
+        useUnifiedTopology: true, 
+        useFindAndModify: false,
+        dbName: 'users',
+        user: 'sham_ait',
+        pass: 'x3cbFO0coQE5FINr'
     },
 	function(err,db) {  //Connect to the 'users' database using MongoDB
 	if(err) {
