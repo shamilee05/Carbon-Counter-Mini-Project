@@ -5,6 +5,4 @@ With an ever-increasing population and the consequent strain put on various reso
 
 In present times, when not everyone is equally interested in contributing their part to the environment, Carbon Counter makes sure that the user keeps their consumption levels in check by carefully calculating the amount of CO2 levels emitted due to the various daily activities that they perform - commuting via their car to reach their workplace, using the kettle to get their morning coffee, using the hairdryer, etc. Increasing levels of CO2 is, definitely, a growing problem and this is one way wherein people could acknowledge their consumption rates and take efforts to minimize them, hence doing their bit for the environment.
 
-For now, there are Registration and Login modules implemented.
-Putting up input of activities and calculation of levels soon.
-Sessions will be added to the login as well.
+For now we have added the functionality of feeding in details about Vehicular Travelling to find out how much of CO2 was emitted in going from the source to the destination.
