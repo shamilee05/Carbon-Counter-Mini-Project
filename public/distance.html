@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"> 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+<!-- JS for Here Maps-->
+<script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"
+    type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"
+        type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"
+        type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"
+        type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css"
+        href="https://js.api.here.com/v3/3.1/mapsjs-ui.css"/>
+
+<title>Carbon Counter</title>
+
+<link rel="stylesheet" href="carbon_style.css">
+
+</head>
+<body>
+    <div class="container pt-3 my-3 border">
+        <h1>Welcome to Carbon Counter</h1>
+        <br><br>
+
+        <h4> Enter details for your work commute below: </h4>
+        Enter Home Location: <input id="start_point" type="text"/> <br> <br>
+        Enter Work Location: <input id="end_point" type="text"/> <br> <br>
+        Enter Your Vehicle MPG (Miles Per Gallon): <input id="mpg" type="text"/> <br> <br>
+
+        <p id="details"></p> <br>
+
+        <button type="button" id="submit" onclick="showRoute()"> Show this route on map </button>
+        
+        <br><br>
+
+        <button type="button" id="calculate_emissions" onclick="showEmissions()"> Calculate Emissions </button><br><br>
+
+        <div style="width: 640px; height: 480px" id="mapContainer"></div>
+
+        <br><br>
+        <script>
+            var dist_miles;
+            function showRoute() {
+                var source_lat = 0, source_long = 0, dest_lat = 0, dest_long = 0;
+                var i;
+
+                // Instantiate a map and platform object:
+                var platform = new H.service.Platform({
+                    'apikey': '', //Enter the API Key
+                });
+
+                // Get default map types from the platform object:
+                var defaultLayers = platform.createDefaultLayers();
+
+                // Instantiate the map:
+                var map = new H.Map(
+                document.getElementById('mapContainer'),
+                defaultLayers.vector.normal.map,
+                {
+                    zoom: 1,
+                    center: { lat: 19.076090, lng: 72.877426 }
+                });
+
+                // Enable the event system on the map instance:
+                var mapEvents = new H.mapevents.MapEvents(map);
+
+                // Instantiate the default behavior, providing the mapEvents object:
+                var behavior = new H.mapevents.Behavior(mapEvents);
+
+                // Create the default UI:
+                var ui = H.ui.UI.createDefault(map, defaultLayers);
+
+                // Finding the source coordinates
+                var source = document.getElementById("start_point").value;
+
+                // Create the parameters for the geocoding request:
+                var geocodingParams = {
+                    searchText: source
+                    };
+
+                // Define a callback function to process the geocoding response:
+                var onResult = function(result) {
+
+                    //var temp_source_lat, temp_source_long;
+                    var locations = result.Response.View[0].Result,
+                        position;
+                    // Add a marker for each location found
+                    for(i = 0;  i < locations.length; i++) {
+                        position = {
+                            lat: locations[i].Location.DisplayPosition.Latitude,
+                            lng: locations[i].Location.DisplayPosition.Longitude
+                        };
+                    }
+                    source_lat = position.lat;
+                    source_long = position.lng;
+                    console.log(source_lat);
+                    console.log(source_long);
+                };
+
+                // Get an instance of the geocoding service:
+                var geocoder = platform.getGeocodingService();
+
+                // Call the geocode method with the geocoding parameters,
+                // the callback and an error callback function (called if a
+                // communication error occurs):
+
+                geocoder.geocode(geocodingParams, onResult, function(e) {
+                    alert(e);
+                });
+
+                var dest = document.getElementById("end_point").value;
+
+                // Create the parameters for the geocoding request:
+                var geocodingParams = {
+                    searchText: dest
+                    };
+
+                // Define a callback function to process the geocoding response:
+                var onResult = function(result) {
+
+                    //var temp_source_lat, temp_source_long;
+                    var locations = result.Response.View[0].Result,
+                        position;
+                    // Add a marker for each location found
+                    for(i = 0;  i < locations.length; i++) {
+                        position = {
+                            lat: locations[i].Location.DisplayPosition.Latitude,
+                            lng: locations[i].Location.DisplayPosition.Longitude
+                        };
+                    }
+                    dest_lat = position.lat;
+                    dest_long = position.lng;
+                    console.log(dest_lat);
+                    console.log(dest_long);
+                };
+
+                // Get an instance of the geocoding service:
+                var geocoder = platform.getGeocodingService();
+
+                // Call the geocode method with the geocoding parameters,
+                // the callback and an error callback function (called if a
+                // communication error occurs):
+
+                geocoder.geocode(geocodingParams, onResult, function(e) {
+                    alert(e);
+                });
+
+                setTimeout(routeThisShit,3000);
+                
+                function routeThisShit() {
+                    console.log(source_lat);
+                    console.log(source_long);
+                    console.log(dest_lat);
+                    console.log(dest_long);
+
+                    // Create the parameters for the routing request:
+                    var routingParameters = {
+                    // The routing mode:
+                    'mode': 'fastest;car',
+                    // The start point of the route:
+                    'waypoint0': 'geo!'+source_lat+','+source_long,
+                    // The end point of the route:
+                    'waypoint1': 'geo!'+dest_lat+','+dest_long,
+                    // To retrieve the shape of the route we choose the route
+                    // representation mode 'display'
+                    'representation': 'display',
+                    //To get distance
+                    'routeAttributes': 'summary'
+                    };
+
+                    // Define a callback function to process the routing response:
+                    var onResult = function(result) {
+                        var route,
+                            routeShape,
+                            startPoint,
+                            endPoint,
+                            linestring;
+                        if(result.response.route) {
+                        // Pick the first route from the response:
+                        route = result.response.route[0];
+                        // Pick the route's shape:
+                        routeShape = route.shape;
+
+                        console.log("Hello");
+                        var dist = result.response.route[0].summary.distance;
+                        dist_miles = dist*0.000621371;  //Convertion for meters to miles
+
+                        // Create a linestring to use as a point source for the route line
+                        linestring = new H.geo.LineString();
+
+                        // Push all the points in the shape into the linestring:
+                        routeShape.forEach(function(point) {
+                            var parts = point.split(',');
+                            linestring.pushLatLngAlt(parts[0], parts[1]);
+                        });
+
+                        // Retrieve the mapped positions of the requested waypoints:
+                        startPoint = route.waypoint[0].mappedPosition;
+                        endPoint = route.waypoint[1].mappedPosition;
+
+                        // Create a polyline to display the route:
+                        var routeLine = new H.map.Polyline(linestring, {
+                            style: { strokeColor: 'blue', lineWidth: 3 }
+                        });
+
+                        // Create a marker for the start point:
+                        var startMarker = new H.map.Marker({
+                            lat: startPoint.latitude,
+                            lng: startPoint.longitude
+                        });
+
+                        // Create a marker for the end point:
+                        var endMarker = new H.map.Marker({
+                            lat: endPoint.latitude,
+                            lng: endPoint.longitude
+                        });
+
+                        // Add the route polyline and the two markers to the map:
+                        map.addObjects([routeLine, startMarker, endMarker]);
+
+                        // Set the map's viewport to make the whole route visible:
+                        map.getViewModel().setLookAtData({bounds: routeLine.getBoundingBox()});
+                        }
+                    };
+
+                    // Get an instance of the routing service:
+                    var router = platform.getRoutingService();
+
+                    // Call calculateRoute() with the routing parameters,
+                    // the callback and an error callback function (called if a
+                    // communication error occurs):
+                    router.calculateRoute(routingParameters, onResult, function(error) {
+                        alert(error.message);
+                    });
+                }
+            }
+
+            function showEmissions() {
+                console.log("Hello Again");
+                console.log(dist_miles);
+                var mpg = document.getElementById("mpg").value;
+                console.log(mpg);
+                var emission = parseFloat(parseFloat(dist_miles) / parseFloat(mpg) * 20.0);
+                document.getElementById("details").innerHTML = emission+" tons of CO2 emitted!";
+            }
+        </script>
+    </div>
+</body>
+</html>
